@@ -2242,12 +2242,67 @@ function ArtifactsSection({ charts }) {
 }
 
 // ============================================================================
-// MAIN APP
+// LANDING PAGE
 // ============================================================================
 
-function App() {
-  const [activeSection, setActiveSection] = useState('overview')
+function LandingPage({ onGetStarted }) {
+  return (
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-12">
+      {/* Course badge */}
+      <p className="text-sm text-gray-400 mb-8 tracking-wide">
+        MAIB AI 219 - Ethics, Sociology & Governance of AI
+      </p>
 
+      {/* Main title */}
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-center mb-6 text-gray-900">
+        Criminal Justice
+        <br />
+        <span className="font-semibold">AI Bias Analysis</span>
+      </h1>
+
+      {/* Subtitle */}
+      <p className="text-lg text-gray-500 text-center max-w-xl mb-12">
+        Examining algorithmic fairness in COMPAS and NYPD Stop-Question-Frisk
+      </p>
+
+      {/* Get Started button */}
+      <button
+        onClick={onGetStarted}
+        className="px-8 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors flex items-center gap-2"
+      >
+        Get Started
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </button>
+
+      {/* Divider */}
+      <div className="w-16 h-px bg-gray-200 my-12"></div>
+
+      {/* Group info */}
+      <p className="text-xs text-gray-400 uppercase tracking-widest mb-6">Group 2</p>
+      <div className="flex flex-wrap justify-center gap-8">
+        {[
+          { name: 'Vidit', role: 'Overview & Methods' },
+          { name: 'Kaleemulla', role: 'COMPAS & NYPD' },
+          { name: 'Ronaldo', role: 'What-If & Compare' },
+          { name: 'Vishal', role: 'Ethics & Limits' },
+        ].map((member) => (
+          <div key={member.name} className="text-center">
+            <p className="text-gray-900 font-medium">{member.name}</p>
+            <p className="text-xs text-gray-400 mt-1">{member.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ============================================================================
+// DASHBOARD (Previous Main Content)
+// ============================================================================
+
+function Dashboard({ activeSection, setActiveSection }) {
   const { data: dashboardData, error: errorDashboard } = useData('dashboard_summary.json')
   const { data: compasData } = useData('compas_analysis.json')
   const { data: nypdData } = useData('nypd_analysis.json')
@@ -2314,6 +2369,21 @@ function App() {
       </main>
     </div>
   )
+}
+
+// ============================================================================
+// MAIN APP
+// ============================================================================
+
+function App() {
+  const [showDashboard, setShowDashboard] = useState(false)
+  const [activeSection, setActiveSection] = useState('overview')
+
+  if (!showDashboard) {
+    return <LandingPage onGetStarted={() => setShowDashboard(true)} />
+  }
+
+  return <Dashboard activeSection={activeSection} setActiveSection={setActiveSection} />
 }
 
 export default App
