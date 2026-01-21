@@ -1,10 +1,7 @@
 [build]
   base = "web"
   publish = "dist"
-  command = "npm run build"
-
-[build.environment]
-  NODE_VERSION = "18"
+  command = "echo 'Using pre-built dist folder'"
 
 # SPA routing - redirect all requests to index.html
 [[redirects]]
