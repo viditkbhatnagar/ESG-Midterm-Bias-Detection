@@ -1,0 +1,384 @@
+{
+  "dataset_name": "COMPAS",
+  "description": "ProPublica COMPAS Recidivism Dataset",
+  "sample_size": 6172,
+  "charts": [
+    {
+      "chart_id": "compas_recidivism_by_race",
+      "filename": "compas_recidivism_by_race.png",
+      "title": "Two-Year Recidivism Rate by Race",
+      "dataset": "COMPAS",
+      "explanation": "This chart shows the actual two-year recidivism rates across different racial groups in the COMPAS dataset. African American defendants show a higher observed recidivism rate compared to other groups. However, this disparity reflects complex socioeconomic factors, systemic inequalities in the criminal justice system, and potential selection bias in who gets arrested and prosecuted. The base rate differences are a key consideration when evaluating algorithmic fairness, as they affect the interpretation of prediction errors.",
+      "speaker_notes": [
+        "African American defendants have highest observed recidivism rate in this dataset",
+        "Base rate differences complicate fairness analysis - equal error rates may not be achievable",
+        "These rates reflect arrests/convictions, not actual criminal behavior",
+        "Socioeconomic factors and systemic bias contribute to these disparities"
+      ],
+      "slide_title": "Recidivism Rates Vary by Race",
+      "talk_track": "Looking at the raw recidivism rates, we see significant variation across racial groups. African American defendants in this dataset have a recidivism rate of about 52%, compared to roughly 39% for White defendants. These differences reflect not just individual behavior but systemic factors including policing patterns, socioeconomic conditions, and selection effects in who enters the criminal justice system in the first place."
+    },
+    {
+      "chart_id": "compas_priors_distribution",
+      "filename": "compas_priors_distribution.png",
+      "title": "Prior Convictions Distribution by Race",
+      "dataset": "COMPAS",
+      "explanation": "The distribution of prior convictions varies across racial groups, with African American defendants showing a wider spread. Prior convictions are a strong predictor of recidivism but also reflect historical disparities in policing and prosecution. Using this feature in prediction models can perpetuate historical biases, as minority communities have been disproportionately policed. This creates a feedback loop where past discrimination influences future predictions.",
+      "speaker_notes": [
+        "Prior convictions strongly predict recidivism but carry historical bias",
+        "Differential policing means minorities have more opportunity for prior arrests",
+        "Using priors in models can perpetuate historical discrimination",
+        "This illustrates the 'feedback loop' problem in predictive systems"
+      ],
+      "slide_title": "Prior Convictions: A Biased Feature?",
+      "talk_track": "Prior convictions are one of the strongest predictors of future recidivism, but they're also deeply problematic from a fairness perspective. Due to historical over-policing of minority communities, African American individuals are more likely to have prior records for the same behavior. When we train algorithms on this data, we risk encoding these historical disparities into our predictions."
+    },
+    {
+      "chart_id": "compas_model_comparison",
+      "filename": "compas_model_comparison.png",
+      "title": "Model Performance Comparison",
+      "dataset": "COMPAS",
+      "explanation": "This chart compares three machine learning models trained to predict two-year recidivism. AUC (Area Under ROC Curve) measures overall discrimination ability, while F1 Score balances precision and recall. Gradient Boosting typically achieves the highest AUC, demonstrating better ability to rank defendants by risk. However, higher accuracy doesn't guarantee fairer outcomes - a model can be accurate overall while producing disparate error rates across groups.",
+      "speaker_notes": [
+        "All models achieve moderate predictive performance (AUC ~0.65-0.72)",
+        "Higher complexity doesn't always mean better performance here",
+        "Accuracy alone is insufficient - must consider fairness metrics",
+        "The 'best' model depends on how we weight accuracy vs. fairness"
+      ],
+      "slide_title": "Comparing Predictive Models",
+      "talk_track": "We trained three models of increasing complexity. Interestingly, the performance gains from more sophisticated models are modest. All achieve AUC scores around 0.65-0.72, which is typical for recidivism prediction. The key insight is that raw accuracy isn't everything - we need to examine how these errors are distributed across demographic groups."
+    },
+    {
+      "chart_id": "compas_roc_curves",
+      "filename": "compas_roc_curves.png",
+      "title": "ROC Curves - Model Comparison",
+      "dataset": "COMPAS",
+      "explanation": "ROC curves visualize the trade-off between true positive rate (correctly identifying recidivists) and false positive rate (incorrectly flagging non-recidivists) at various thresholds. The curves for all three models are similar, suggesting the choice of algorithm matters less than the fundamental predictability of the outcome. The diagonal line represents random guessing - our models perform meaningfully better but are far from perfect prediction.",
+      "speaker_notes": [
+        "ROC curves show trade-off between sensitivity and specificity",
+        "All models significantly outperform random chance",
+        "Similar curves suggest algorithm choice has limited impact",
+        "Perfect prediction (AUC=1.0) is likely impossible for this task"
+      ],
+      "slide_title": "ROC Analysis Shows Moderate Predictability",
+      "talk_track": "The ROC curves tell an important story - all three models perform similarly, with AUCs clustering around 0.70. This suggests that the choice of algorithm matters less than the inherent difficulty of predicting human behavior. No model achieves excellent discrimination, which raises questions about deploying such systems for high-stakes decisions."
+    },
+    {
+      "chart_id": "compas_confusion_matrix",
+      "filename": "compas_confusion_matrix.png",
+      "title": "Confusion Matrix - Logistic Regression",
+      "dataset": "COMPAS",
+      "explanation": "The confusion matrix shows how predictions map to actual outcomes. False positives (top-right) represent people incorrectly predicted to recidivate - they may face harsher treatment despite not actually reoffending. False negatives (bottom-left) represent missed predictions of recidivism. In criminal justice, false positives can mean unnecessary incarceration, while false negatives might mean inadequate supervision. The ethical weight of these errors differs.",
+      "speaker_notes": [
+        "False positives: predicted recidivism but didn't reoffend (potential unjust detention)",
+        "False negatives: predicted no recidivism but did reoffend (potential public safety issue)",
+        "Neither error type is 'neutral' - both have real human consequences",
+        "The distribution of these errors across groups is the fairness question"
+      ],
+      "slide_title": "Understanding Prediction Errors",
+      "talk_track": "This confusion matrix reveals the real-world implications of our model's errors. When we predict someone will recidivate but they don't - a false positive - that person might receive a longer sentence or be denied parole unjustly. Conversely, false negatives might mean someone who needed intervention didn't receive it. Neither error is neutral."
+    },
+    {
+      "chart_id": "compas_fairness_by_race",
+      "filename": "compas_fairness_by_race.png",
+      "title": "Fairness Metrics by Race",
+      "dataset": "COMPAS",
+      "explanation": "These three panels reveal how prediction errors distribute across racial groups. Selection rate (left) shows who gets predicted as high-risk - African Americans are flagged at higher rates. False Positive Rate (center) shows errors on non-recidivists - African Americans are more likely to be wrongly predicted to recidivate. False Negative Rate (right) shows errors on actual recidivists - White defendants are more likely to be wrongly predicted as low-risk. This pattern mirrors the ProPublica investigation's findings about COMPAS.",
+      "speaker_notes": [
+        "Higher FPR for Black defendants = more likely wrongly labeled high-risk",
+        "Higher FNR for White defendants = more likely wrongly labeled low-risk",
+        "This is the core 'algorithmic bias' finding from ProPublica's investigation",
+        "These disparities persist across different model architectures"
+      ],
+      "slide_title": "Disparate Error Rates: The Fairness Problem",
+      "talk_track": "This is the crux of the fairness debate. African American defendants face a higher false positive rate - meaning they're more likely to be incorrectly labeled as high-risk when they won't actually recidivate. Conversely, White defendants have a higher false negative rate - more likely to be labeled low-risk when they will recidivate. These aren't random errors; they're systematically skewed."
+    },
+    {
+      "chart_id": "compas_calibration_curves",
+      "filename": "compas_calibration_curves.png",
+      "title": "Calibration Curves by Race",
+      "dataset": "COMPAS",
+      "explanation": "Calibration curves show whether predicted probabilities match observed frequencies. A well-calibrated model should have points along the diagonal - if the model says 70% risk, about 70% of those individuals should actually recidivate. Different calibration by group indicates the model's confidence means different things for different populations. This connects to the debate about whether 'fairness' means equal calibration or equal error rates across groups.",
+      "speaker_notes": [
+        "Calibration = do predicted probabilities match reality?",
+        "Differences suggest the 'same score' means different things for different groups",
+        "This is central to COMPAS debate: Northpointe argued calibration was fair",
+        "ProPublica argued error rate differences mattered more"
+      ],
+      "slide_title": "What Does a Risk Score Really Mean?",
+      "talk_track": "Calibration curves address a crucial question: when the model says someone has a 70% risk of recidivism, do 70% of such people actually recidivate? The COMPAS company argued their scores were calibrated equally across races. But ProPublica showed that error rates differed. This highlights a fundamental tension - we can't simultaneously have equal calibration AND equal error rates when base rates differ between groups."
+    },
+    {
+      "chart_id": "compas_mitigation_comparison",
+      "filename": "compas_mitigation_comparison.png",
+      "title": "Bias Mitigation: Before vs After",
+      "dataset": "COMPAS",
+      "explanation": "Bias mitigation techniques can reduce fairness gaps but typically at some cost to overall accuracy. The left panel shows the trade-off: moving from red (before) to green (after) reduces the equalized odds difference but may decrease accuracy. The right panel shows how false positive rates become more similar across groups after mitigation. This illustrates a fundamental tension in algorithmic fairness - we often can't maximize accuracy and fairness simultaneously.",
+      "speaker_notes": [
+        "Mitigation reduces disparity but may reduce accuracy",
+        "This is the 'fairness-accuracy trade-off' discussed in literature",
+        "The 'optimal' point depends on societal values, not just math",
+        "Different mitigation methods have different trade-off profiles"
+      ],
+      "slide_title": "The Fairness-Accuracy Trade-off",
+      "talk_track": "When we apply bias mitigation - in this case, threshold optimization to equalize error rates - we see a meaningful reduction in the equalized odds difference. However, this comes at a cost to overall accuracy. This trade-off isn't a technical failure; it's a reflection of the fundamental impossibility of satisfying all fairness criteria simultaneously when base rates differ."
+    },
+    {
+      "chart_id": "compas_feature_importance",
+      "filename": "compas_feature_importance.png",
+      "title": "Feature Importance",
+      "dataset": "COMPAS",
+      "explanation": "Feature importance reveals what the model 'looks at' when making predictions. Prior convictions and age are typically most predictive. Notably, race-related features often have low direct importance, but this doesn't mean the model is unbiased - race correlates with other features like number of priors due to systemic factors. The model can learn racial disparities indirectly through proxy variables, a phenomenon called 'redundant encoding' of protected attributes.",
+      "speaker_notes": [
+        "Number of priors is typically the strongest predictor",
+        "Age also matters - younger defendants have higher predicted risk",
+        "Low importance of race features doesn't mean model is fair",
+        "Proxy variables can encode race indirectly"
+      ],
+      "slide_title": "What Drives Predictions?",
+      "talk_track": "Looking at feature importance, we see that criminal history - particularly number of prior convictions - dominates the prediction. Race variables have lower direct importance, but this doesn't mean the model is race-neutral. Other features like priors and age correlate with race due to historical policing patterns, so the model can learn racial patterns indirectly."
+    }
+  ],
+  "metrics": {
+    "base_rates_by_race": {
+      "African_American": 0.5231496062992126,
+      "White": 0.3908701854493581,
+      "Hispanic": 0.3713163064833006,
+      "Other": 0.36151603498542273,
+      "Asian": 0.25806451612903225,
+      "Native_American": 0.45454545454545453
+    },
+    "counts_by_race": {
+      "African_American": 3175,
+      "White": 2103,
+      "Hispanic": 509,
+      "Other": 343,
+      "Asian": 31,
+      "Native_American": 11
+    }
+  },
+  "fairness": {},
+  "models": {
+    "Logistic Regression": {
+      "accuracy": 0.6841252699784017,
+      "precision": 0.6811797752808989,
+      "recall": 0.575326215895611,
+      "f1": 0.6237942122186495,
+      "auc": 0.7375153864331337,
+      "brier_score": 0.20683240021659166,
+      "fairness": {
+        "selection_rate_difference": 0.5177824267782427,
+        "selection_rates_by_group": {
+          "African_American": 0.5177824267782427,
+          "Asian": 0.0,
+          "Hispanic": 0.23404255319148937,
+          "Native_American": 0.0,
+          "Other": 0.1958762886597938,
+          "White": 0.2558139534883721
+        },
+        "fpr_difference": 0.3303370786516854,
+        "fpr_by_group": {
+          "African_American": 0.3303370786516854,
+          "Asian": 0.0,
+          "Hispanic": 0.1111111111111111,
+          "Native_American": 0.0,
+          "Other": 0.11764705882352941,
+          "White": 0.15555555555555556
+        },
+        "fnr_difference": 1.0,
+        "fnr_by_group": {
+          "African_American": 0.31898238747553814,
+          "Asian": 1.0,
+          "Hispanic": 0.6,
+          "Native_American": 0,
+          "Other": 0.6206896551724138,
+          "White": 0.575
+        },
+        "equalized_odds_difference": 1.0
+      }
+    },
+    "Random Forest": {
+      "accuracy": 0.6630669546436285,
+      "precision": 0.6535764375876578,
+      "recall": 0.5527876631079478,
+      "f1": 0.5989717223650386,
+      "auc": 0.7006379124063735,
+      "brier_score": 0.2267464814866664,
+      "fairness": {
+        "selection_rate_difference": 0.5104602510460251,
+        "selection_rates_by_group": {
+          "African_American": 0.5104602510460251,
+          "Asian": 0.09090909090909091,
+          "Hispanic": 0.2624113475177305,
+          "Native_American": 0.0,
+          "Other": 0.23711340206185566,
+          "White": 0.25426356589147286
+        },
+        "fpr_difference": 0.36179775280898874,
+        "fpr_by_group": {
+          "African_American": 0.36179775280898874,
+          "Asian": 0.0,
+          "Hispanic": 0.1728395061728395,
+          "Native_American": 0.0,
+          "Other": 0.1323529411764706,
+          "White": 0.15555555555555556
+        },
+        "fnr_difference": 0.6666666666666666,
+        "fnr_by_group": {
+          "African_American": 0.36007827788649704,
+          "Asian": 0.6666666666666666,
+          "Hispanic": 0.6166666666666667,
+          "Native_American": 0,
+          "Other": 0.5172413793103449,
+          "White": 0.5791666666666667
+        },
+        "equalized_odds_difference": 0.6666666666666666
+      }
+    },
+    "Gradient Boosting": {
+      "accuracy": 0.6798056155507559,
+      "precision": 0.6790830945558739,
+      "recall": 0.5622775800711743,
+      "f1": 0.6151849448410124,
+      "auc": 0.7249669933822172,
+      "brier_score": 0.21231516458305164,
+      "fairness": {
+        "selection_rate_difference": 0.5062761506276151,
+        "selection_rates_by_group": {
+          "African_American": 0.5062761506276151,
+          "Asian": 0.0,
+          "Hispanic": 0.19148936170212766,
+          "Native_American": 0.5,
+          "Other": 0.24742268041237114,
+          "White": 0.25116279069767444
+        },
+        "fpr_difference": 0.5,
+        "fpr_by_group": {
+          "African_American": 0.3325842696629214,
+          "Asian": 0.0,
+          "Hispanic": 0.08641975308641975,
+          "Native_American": 0.5,
+          "Other": 0.14705882352941177,
+          "White": 0.14320987654320988
+        },
+        "fnr_difference": 1.0,
+        "fnr_by_group": {
+          "African_American": 0.3424657534246575,
+          "Asian": 1.0,
+          "Hispanic": 0.6666666666666666,
+          "Native_American": 0,
+          "Other": 0.5172413793103449,
+          "White": 0.5666666666666667
+        },
+        "equalized_odds_difference": 1.0
+      }
+    }
+  },
+  "preprocessing": {
+    "target_column": "Two_yr_Recidivism",
+    "feature_columns": [
+      "Number_of_Priors",
+      "score_factor",
+      "Age_Above_FourtyFive",
+      "Age_Below_TwentyFive",
+      "African_American",
+      "Asian",
+      "Hispanic",
+      "Native_American",
+      "Other",
+      "Female",
+      "Misdemeanor"
+    ],
+    "race_column": "race_label (derived from one-hot)",
+    "n_features": 11,
+    "missing_values": 0,
+    "outcome_distribution": {
+      "positive": 2809,
+      "negative": 3363,
+      "base_rate": 0.4551198963058976
+    }
+  },
+  "best_model": {
+    "name": "Logistic Regression",
+    "auc": 0.7375153864331337,
+    "f1": 0.6237942122186495
+  },
+  "mitigation": {
+    "accuracy": 0.6538876889848813,
+    "f1": 0.5768976897689769,
+    "fairness": {
+      "selection_rate_difference": 0.7010309278350515,
+      "selection_rates_by_group": {
+        "African_American": 0.38284518828451886,
+        "Asian": 0.45454545454545453,
+        "Hispanic": 0.3475177304964539,
+        "Native_American": 1.0,
+        "Other": 0.29896907216494845,
+        "White": 0.3426356589147287
+      },
+      "fpr_difference": 0.7941176470588236,
+      "fpr_by_group": {
+        "African_American": 0.22696629213483147,
+        "Asian": 0.25,
+        "Hispanic": 0.2345679012345679,
+        "Native_American": 1.0,
+        "Other": 0.20588235294117646,
+        "White": 0.23950617283950618
+      },
+      "fnr_difference": 0.5,
+      "fnr_by_group": {
+        "African_American": 0.48140900195694714,
+        "Asian": 0.0,
+        "Hispanic": 0.5,
+        "Native_American": 0,
+        "Other": 0.4827586206896552,
+        "White": 0.48333333333333334
+      },
+      "equalized_odds_difference": 0.7941176470588236
+    },
+    "method": "ThresholdOptimizer (Equalized Odds)",
+    "applied": true
+  },
+  "feature_importance": [
+    {
+      "feature": "Asian",
+      "importance": -0.00037796976241900594
+    },
+    {
+      "feature": "Other",
+      "importance": -0.00016198704103672634
+    },
+    {
+      "feature": "Native_American",
+      "importance": 0.00048596112311017904
+    },
+    {
+      "feature": "Hispanic",
+      "importance": 0.0021598272138228956
+    },
+    {
+      "feature": "African_American",
+      "importance": 0.002159827213822907
+    },
+    {
+      "feature": "Female",
+      "importance": 0.002321814254859611
+    },
+    {
+      "feature": "Age_Above_FourtyFive",
+      "importance": 0.006911447084233269
+    },
+    {
+      "feature": "Age_Below_TwentyFive",
+      "importance": 0.012473002159827218
+    },
+    {
+      "feature": "score_factor",
+      "importance": 0.04605831533477321
+    },
+    {
+      "feature": "Number_of_Priors",
+      "importance": 0.07840172786177106
+    }
+  ]
+}

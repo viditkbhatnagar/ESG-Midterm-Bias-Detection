@@ -1,0 +1,111 @@
+{
+  "datasets": {
+    "COMPAS": {
+      "name": "COMPAS Recidivism",
+      "sample_size": 6172,
+      "outcome": "Two-year recidivism",
+      "base_rate": 0.4551198963058976,
+      "best_model_auc": 0.7375153864331337
+    },
+    "NYPD": {
+      "name": "NYPD Stop-Question-Frisk",
+      "sample_size": 100000,
+      "outcome": "Arrest was made during stop",
+      "base_rate": 0.06020456302006484,
+      "best_model_auc": 0.855674120605352
+    }
+  },
+  "charts": [
+    {
+      "chart_id": "comparison_base_rates",
+      "filename": "comparison_base_rates.png",
+      "title": "Outcome Rates by Race: COMPAS vs NYPD",
+      "dataset": "Comparison",
+      "explanation": "Comparing outcome rates across datasets reveals different patterns of disparity. In COMPAS, African American defendants have higher observed recidivism rates. In NYPD data, the pattern is different - arrest/search rates are relatively similar or even lower for minorities despite far more stops. This contrast highlights how different stages of the criminal justice system produce different disparity patterns. Both reflect systemic issues but manifest differently.",
+      "speaker_notes": [
+        "COMPAS shows higher recidivism rates for Black defendants",
+        "NYPD shows similar or lower 'hit rates' despite more stops",
+        "Different stages of system, different disparity patterns",
+        "Both datasets show racial disparities, expressed differently"
+      ],
+      "slide_title": "Two Datasets, Different Disparity Patterns",
+      "talk_track": "Comparing these datasets reveals how racial disparities manifest differently at different points in the system. In COMPAS, Black defendants show higher recidivism rates - but this reflects who gets arrested and prosecuted. In NYPD data, minorities are stopped far more but don't have higher outcome rates - suggesting lower thresholds for stopping them."
+    },
+    {
+      "chart_id": "comparison_fairness_metrics",
+      "filename": "comparison_fairness_metrics.png",
+      "title": "Fairness Metric Comparison",
+      "dataset": "Comparison",
+      "explanation": "This chart compares fairness metrics between the two datasets. Both show meaningful disparities across multiple fairness criteria. The dashed line at 0.1 represents a common threshold used in fairness literature - values above suggest actionable disparity. Notably, the pattern of which metrics show most disparity differs between datasets, reflecting the different nature of the decisions being modeled (recidivism prediction vs. stop outcome prediction).",
+      "speaker_notes": [
+        "Both datasets exceed common fairness thresholds",
+        "Different metrics are most problematic in each dataset",
+        "0.1 difference often used as actionable threshold",
+        "Both systems would fail many fairness audits"
+      ],
+      "slide_title": "Fairness Audit Results",
+      "talk_track": "Both datasets show significant disparities across multiple fairness metrics. The dashed line at 0.1 represents a common threshold - above this, many would consider the disparity actionable. Both COMPAS and a model trained on NYPD data exceed this threshold on multiple metrics, suggesting both would fail fairness audits."
+    },
+    {
+      "chart_id": "comparison_feedback_loop",
+      "filename": "comparison_feedback_loop.png",
+      "title": "The Algorithmic Feedback Loop",
+      "dataset": "Comparison",
+      "explanation": "This diagram illustrates how bias perpetuates through the criminal justice AI pipeline. Historical policing patterns (which reflect societal biases) generate arrest data. This data trains predictive policing tools and risk assessment algorithms. These tools influence real decisions - who gets stopped, who gets longer sentences. Those decisions generate new criminal records, which become future training data. The loop reinforces itself: past bias becomes encoded in algorithms that produce future bias.",
+      "speaker_notes": [
+        "Bias isn't just in the algorithm - it's in the entire system",
+        "Training data reflects historical discrimination",
+        "Predictions influence decisions that generate new data",
+        "Without intervention, the loop amplifies disparities"
+      ],
+      "slide_title": "The Vicious Cycle of Algorithmic Bias",
+      "talk_track": "This is perhaps the most important insight from our analysis. Bias in criminal justice AI isn't a one-time problem we can fix with better algorithms. It's a feedback loop. Historical discrimination produced biased data. That data trains algorithms. Those algorithms influence decisions. Those decisions create new data. And the cycle continues, potentially amplifying disparities over time."
+    }
+  ],
+  "key_findings": [
+    {
+      "finding": "Both datasets show significant racial disparities in outcomes and model predictions.",
+      "evidence": "COMPAS shows higher recidivism rates for African Americans; NYPD shows minorities are stopped far more frequently.",
+      "implication": "Algorithmic systems trained on this data will inherit these disparities."
+    },
+    {
+      "finding": "Different fairness metrics reveal different aspects of bias.",
+      "evidence": "COMPAS shows high FPR disparity (error on non-recidivists); NYPD shows high selection rate disparity.",
+      "implication": "No single fairness metric captures all forms of bias; comprehensive auditing is needed."
+    },
+    {
+      "finding": "Bias mitigation can reduce disparities but involves accuracy trade-offs.",
+      "evidence": "Post-mitigation COMPAS model reduced equalized odds difference while sacrificing some accuracy.",
+      "implication": "Fairness interventions require value judgments about acceptable trade-offs."
+    },
+    {
+      "finding": "Geographic and demographic factors are deeply confounded.",
+      "evidence": "NYPD precinct analysis shows race and location are intertwined in stop patterns.",
+      "implication": "Controlling for geography doesn't eliminate racial disparities; both contribute."
+    },
+    {
+      "finding": "Predictive models have moderate accuracy, questioning their use for high-stakes decisions.",
+      "evidence": "Best models achieve AUC of 0.74 (COMPAS) and 0.86 (NYPD).",
+      "implication": "Models are better than random but far from reliable; error rates have human consequences."
+    },
+    {
+      "finding": "The criminal justice AI pipeline creates feedback loops that can amplify bias.",
+      "evidence": "Policing data feeds risk scores, which influence sentencing, which creates criminal records for future training.",
+      "implication": "Technical fixes alone are insufficient; systemic intervention is required."
+    }
+  ],
+  "fairness_comparison": {
+    "COMPAS": {
+      "selection_rate_difference": 0.5177824267782427,
+      "fpr_difference": 0.3303370786516854,
+      "fnr_difference": 1.0,
+      "equalized_odds_difference": 1.0
+    },
+    "NYPD": {
+      "selection_rate_difference": 0.017855028534893083,
+      "fpr_difference": 0.014780400842742153,
+      "fnr_difference": 0.3131868131868132,
+      "equalized_odds_difference": 0.3131868131868132
+    }
+  }
+}

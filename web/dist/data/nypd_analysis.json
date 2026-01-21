@@ -1,0 +1,417 @@
+{
+  "dataset_name": "NYPD SQF 2012",
+  "description": "New York Police Department Stop, Question, and Frisk Data (2012)",
+  "sample_size": 100000,
+  "charts": [
+    {
+      "chart_id": "nypd_stops_by_race",
+      "filename": "nypd_stops_by_race.png",
+      "title": "Stop-and-Frisk Encounters by Race",
+      "dataset": "NYPD SQF",
+      "explanation": "This chart shows the racial composition of police stops in NYC during 2012. Black and Hispanic individuals constitute the vast majority of stops - far exceeding their proportion of the city's population. In 2012, NYC was approximately 33% White, 29% Hispanic, and 26% Black, yet White individuals represent a small fraction of stops. This disparity was central to the Floyd v. City of New York ruling that found the program unconstitutional.",
+      "speaker_notes": [
+        "Black and Hispanic individuals make up ~85% of stops",
+        "NYC demographic composition doesn't match stop patterns",
+        "This disparity led to federal court ruling against NYPD in 2013",
+        "Raises questions about reasonable suspicion standards"
+      ],
+      "slide_title": "Who Gets Stopped? Racial Disparities in SQF",
+      "talk_track": "The Stop-Question-Frisk data reveals stark racial disparities. In 2012, Black and Hispanic New Yorkers made up approximately 85% of all stops, despite being about 55% of the city's population. These numbers became central evidence in the federal lawsuit that ultimately found the program unconstitutional."
+    },
+    {
+      "chart_id": "nypd_outcome_by_race",
+      "filename": "nypd_outcome_by_race.png",
+      "title": "Arrest Rate by Race",
+      "dataset": "NYPD SQF",
+      "explanation": "This chart shows the arrest rate - the proportion of stops that resulted in a arrest - broken down by race. Interestingly, outcome rates are often similar or even lower for Black and Hispanic individuals compared to White individuals. This is significant: if police had equally good 'reasonable suspicion' across groups, we'd expect similar outcome rates. Lower 'hit rates' for minorities suggest the threshold for stopping them may be lower - a form of differential treatment.",
+      "speaker_notes": [
+        "Arrest rates are relatively similar across groups",
+        "Lower or equal rates for minorities despite more stops is telling",
+        "Suggests different 'reasonable suspicion' thresholds by race",
+        "This is the 'hit rate' disparity discussed in policing literature"
+      ],
+      "slide_title": "Arrest Rates: A Deeper Story",
+      "talk_track": "Looking at arrest rates - the proportion of stops that resulted in a arrest - we see something important. Despite being stopped far more often, Black and Hispanic individuals don't have higher rates. This suggests police may use a lower threshold of suspicion when stopping minorities - they're stopped more often but aren't more likely to have done something wrong."
+    },
+    {
+      "chart_id": "nypd_precinct_analysis",
+      "filename": "nypd_precinct_analysis.png",
+      "title": "Precinct Analysis: Outcomes and Demographics",
+      "dataset": "NYPD SQF",
+      "explanation": "This chart reveals geographic patterns in stop-and-frisk. Each bar pair shows a precinct's arrest rate alongside the proportion of Black individuals stopped there. Precincts vary significantly in both metrics. Some high-activity precincts have very high proportions of Black stops. This geographic clustering means that neighborhood-level factors like poverty, crime rates, and police deployment patterns contribute to racial disparities in stops - but also raises questions about whether deployment itself reflects bias.",
+      "speaker_notes": [
+        "Geographic patterns show concentrated policing in certain precincts",
+        "Racial composition of stops varies significantly by location",
+        "Some precincts show >90% Black/Hispanic stops",
+        "Deployment decisions determine who gets policed"
+      ],
+      "slide_title": "Geography of Policing",
+      "talk_track": "The geographic dimension is crucial. Stop patterns aren't uniform across the city - they're heavily concentrated in certain precincts. These precincts tend to have higher proportions of Black and Hispanic residents and receive more police resources. This creates a feedback loop: more police presence leads to more stops, which generates more data, which may justify continued heavy policing."
+    },
+    {
+      "chart_id": "nypd_confounding_heatmap",
+      "filename": "nypd_confounding_heatmap.png",
+      "title": "Arrest Rate by Precinct and Race",
+      "dataset": "NYPD SQF",
+      "explanation": "This heatmap reveals the complex interaction between race, location, and stop outcomes. Each cell shows the arrest rate for a specific race in a specific precinct. Within precincts, we can see whether outcome rates differ by race holding location constant. This helps disentangle whether racial disparities are driven by 'who gets stopped' vs 'where police are deployed'. The pattern suggests both factors play a role.",
+      "speaker_notes": [
+        "Heatmap controls for location to isolate racial effects",
+        "Within-precinct disparities suggest race matters beyond geography",
+        "Some precincts show racial disparities, others don't",
+        "Complex interaction between place and race"
+      ],
+      "slide_title": "Disentangling Race and Place",
+      "talk_track": "This heatmap helps us understand whether racial disparities persist when we control for location. If disparities were purely geographic - driven by where police are deployed - we'd expect similar rates within each precinct. Instead, we see variation by race even within the same precinct, suggesting that race itself influences stop and arrest decisions beyond just neighborhood effects."
+    },
+    {
+      "chart_id": "nypd_age_distribution",
+      "filename": "nypd_age_distribution.png",
+      "title": "Age Distribution by Race",
+      "dataset": "NYPD SQF",
+      "explanation": "The age distribution of stopped individuals shows that police stops heavily target young people across all races. The peak is in the late teens and early twenties. This pattern is consistent with crime statistics showing younger individuals are more likely to be involved in crime - but it also means young minority males bear the heaviest burden of stop-and-frisk policies, with potential long-term effects on their relationship with law enforcement and society.",
+      "speaker_notes": [
+        "Stops heavily concentrated among young people (15-25)",
+        "Similar age patterns across racial groups",
+        "Young Black and Hispanic males most frequently stopped",
+        "Repeated stops can affect trust in law enforcement"
+      ],
+      "slide_title": "The Young Bear the Burden",
+      "talk_track": "Looking at age, we see stops concentrate heavily among young people - the peak is around 18-22 years old. This pattern holds across races, but combined with the racial disparities we've seen, it means young Black and Hispanic men face the most intense police contact. Research shows repeated stops can erode trust in institutions and have lasting psychological effects."
+    },
+    {
+      "chart_id": "nypd_model_comparison",
+      "filename": "nypd_model_comparison.png",
+      "title": "Model Performance - Arrest Prediction",
+      "dataset": "NYPD SQF",
+      "explanation": "These models attempt to predict whether a stop will result in an arrest, using the circumstances recorded at the time of the stop. Predictive performance indicates how well stop characteristics correlate with outcomes. Interestingly, if police were perfectly effective at identifying suspicious activity, we'd expect high predictive accuracy. Moderate accuracy suggests significant noise in who gets stopped - many stops don't result in any enforcement action.",
+      "speaker_notes": [
+        "Models predict arrest from stop circumstances",
+        "Moderate AUC suggests imperfect targeting",
+        "Low F1 often due to class imbalance (most stops don't lead to arrest)",
+        "Predictability indicates signal in stop reasons"
+      ],
+      "slide_title": "Can We Predict Arrests?",
+      "talk_track": "We trained models to predict whether a stop would lead to an arrest based on the recorded circumstances. The moderate performance tells us something important: stop characteristics do predict outcomes to some degree, but there's substantial unpredictability. Many stops based on 'reasonable suspicion' don't result in any action."
+    },
+    {
+      "chart_id": "nypd_fairness_metrics",
+      "filename": "nypd_fairness_metrics.png",
+      "title": "Fairness Metrics by Race",
+      "dataset": "NYPD SQF",
+      "explanation": "These panels show how our arrest prediction model performs across racial groups. The left panel shows predicted positive rates - whether the model predicts high or low risk differently by race. The right panel shows error rates: FPR (falsely predicting arrest) and FNR (missing actual arrests). Disparities here indicate that model errors aren't equally distributed, raising fairness concerns if such models were used to guide policing decisions.",
+      "speaker_notes": [
+        "Model predictions vary by race",
+        "Error rates show how mistakes are distributed",
+        "Disparities in errors = disparate impact",
+        "Using such models could amplify existing biases"
+      ],
+      "slide_title": "Fairness in Predictive Policing",
+      "talk_track": "If we were to use this model to guide policing - which is essentially what predictive policing does - we'd need to examine its fairness properties. The disparities in error rates show that the model doesn't fail equally across groups. Some groups face higher false positive rates, meaning they'd be disproportionately flagged for scrutiny."
+    }
+  ],
+  "metrics": {
+    "stops_by_race": {
+      "Black": 53010,
+      "Hispanic": 24317,
+      "White": 9415,
+      "Black Hispanic": 6743,
+      "Asian": 3153,
+      "Other": 1890,
+      "Unknown": 701,
+      "Native American": 398
+    },
+    "outcome_rates_by_race": {
+      "Black": 0.0552725900773439,
+      "Hispanic": 0.06744252991734177,
+      "White": 0.06691449814126393,
+      "Black Hispanic": 0.06376983538484354,
+      "Asian": 0.06818902632413575,
+      "Other": 0.039153439153439155,
+      "Unknown": 0.07132667617689016,
+      "Native American": 0.0728643216080402
+    },
+    "precinct_analysis": [
+      {
+        "precinct": 75,
+        "outcome_rate": 0.024213075060532687,
+        "stop_count": 4543,
+        "pct_black": 0.7347567686550738
+      },
+      {
+        "precinct": 73,
+        "outcome_rate": 0.02061599602583209,
+        "stop_count": 4026,
+        "pct_black": 0.8596621957277695
+      },
+      {
+        "precinct": 40,
+        "outcome_rate": 0.052972336668628606,
+        "stop_count": 3398,
+        "pct_black": 0.4970570924072984
+      },
+      {
+        "precinct": 44,
+        "outcome_rate": 0.08278489781780395,
+        "stop_count": 2887,
+        "pct_black": 0.47696570834776586
+      },
+      {
+        "precinct": 79,
+        "outcome_rate": 0.03753157704799711,
+        "stop_count": 2771,
+        "pct_black": 0.7849151930710935
+      },
+      {
+        "precinct": 103,
+        "outcome_rate": 0.08096828046744574,
+        "stop_count": 2396,
+        "pct_black": 0.6665275459098498
+      },
+      {
+        "precinct": 120,
+        "outcome_rate": 0.07497857754927163,
+        "stop_count": 2334,
+        "pct_black": 0.5886889460154242
+      },
+      {
+        "precinct": 83,
+        "outcome_rate": 0.04657411553963278,
+        "stop_count": 2233,
+        "pct_black": 0.3703537841468876
+      },
+      {
+        "precinct": 70,
+        "outcome_rate": 0.01344215074411906,
+        "stop_count": 2083,
+        "pct_black": 0.7047527604416707
+      },
+      {
+        "precinct": 67,
+        "outcome_rate": 0.02714493456131847,
+        "stop_count": 2063,
+        "pct_black": 0.9331071255453224
+      },
+      {
+        "precinct": 23,
+        "outcome_rate": 0.04661432777232581,
+        "stop_count": 2038,
+        "pct_black": 0.6079489695780177
+      },
+      {
+        "precinct": 43,
+        "outcome_rate": 0.06933198380566802,
+        "stop_count": 1976,
+        "pct_black": 0.47520242914979755
+      },
+      {
+        "precinct": 32,
+        "outcome_rate": 0.08358662613981763,
+        "stop_count": 1974,
+        "pct_black": 0.8424518743667679
+      },
+      {
+        "precinct": 77,
+        "outcome_rate": 0.031880977683315624,
+        "stop_count": 1882,
+        "pct_black": 0.8873538788522848
+      },
+      {
+        "precinct": 101,
+        "outcome_rate": 0.049276914836636314,
+        "stop_count": 1867,
+        "pct_black": 0.8746652383502946
+      }
+    ]
+  },
+  "fairness": {
+    "selection_rate_difference": 0.017855028534893083,
+    "selection_rates_by_group": {
+      "Asian": 0.03297872340425532,
+      "Black": 0.026938775510204082,
+      "Black Hispanic": 0.0263671875,
+      "Hispanic": 0.029932720032953452,
+      "Native American": 0.01652892561983471,
+      "Other": 0.03185840707964602,
+      "Unknown": 0.018604651162790697,
+      "White": 0.034383954154727794
+    },
+    "fpr_difference": 0.014780400842742153,
+    "fpr_by_group": {
+      "Asian": 0.006857142857142857,
+      "Black": 0.011540757445115075,
+      "Black Hispanic": 0.005780346820809248,
+      "Hispanic": 0.0101620029455081,
+      "Native American": 0.008771929824561403,
+      "Other": 0.020560747663551402,
+      "Unknown": 0.014925373134328358,
+      "White": 0.009633911368015413
+    },
+    "fnr_difference": 0.3131868131868132,
+    "fnr_by_group": {
+      "Asian": 0.6153846153846154,
+      "Black": 0.6992924528301887,
+      "Black Hispanic": 0.7034482758620689,
+      "Hispanic": 0.6977687626774848,
+      "Native American": 0.8571428571428571,
+      "Other": 0.7666666666666667,
+      "Unknown": 0.9285714285714286,
+      "White": 0.6395939086294417
+    },
+    "equalized_odds_difference": 0.3131868131868132
+  },
+  "models": {
+    "Logistic Regression": {
+      "accuracy": 0.9470373716082839,
+      "precision": 0.647945205479452,
+      "recall": 0.26292384658143414,
+      "f1": 0.37406089363384737,
+      "auc": 0.8339851497736868,
+      "brier_score": 0.043888908786104616,
+      "fairness": {
+        "selection_rate_difference": 0.012194478635484438,
+        "selection_rates_by_group": {
+          "Asian": 0.02872340425531915,
+          "Black": 0.023861852433281004,
+          "Black Hispanic": 0.0234375,
+          "Hispanic": 0.02457778388026912,
+          "Native American": 0.01652892561983471,
+          "Other": 0.024778761061946902,
+          "Unknown": 0.018604651162790697,
+          "White": 0.027220630372492838
+        },
+        "fpr_difference": 0.01439094320140867,
+        "fpr_by_group": {
+          "Asian": 0.009142857142857144,
+          "Black": 0.010346885985275585,
+          "Black Hispanic": 0.0031529164477141357,
+          "Hispanic": 0.008394698085419735,
+          "Native American": 0.017543859649122806,
+          "Other": 0.014953271028037384,
+          "Unknown": 0.004975124378109453,
+          "White": 0.007321772639691715
+        },
+        "fnr_difference": 0.29230769230769227,
+        "fnr_by_group": {
+          "Asian": 0.7076923076923077,
+          "Black": 0.7358490566037735,
+          "Black Hispanic": 0.7103448275862069,
+          "Hispanic": 0.7525354969574036,
+          "Native American": 1.0,
+          "Other": 0.8,
+          "Unknown": 0.7857142857142857,
+          "White": 0.7106598984771574
+        },
+        "equalized_odds_difference": 0.29230769230769227
+      }
+    },
+    "Random Forest": {
+      "accuracy": 0.9431228880190037,
+      "precision": 0.5508735868448099,
+      "recall": 0.2979433018343524,
+      "f1": 0.38672438672438675,
+      "auc": 0.814200840584075,
+      "brier_score": 0.04619385738218178,
+      "fairness": {
+        "selection_rate_difference": 0.03924658850663079,
+        "selection_rates_by_group": {
+          "Asian": 0.031914893617021274,
+          "Black": 0.031020408163265307,
+          "Black Hispanic": 0.0361328125,
+          "Hispanic": 0.032678841136894135,
+          "Native American": 0.05785123966942149,
+          "Other": 0.03893805309734513,
+          "Unknown": 0.018604651162790697,
+          "White": 0.03724928366762178
+        },
+        "fpr_difference": 0.035859649122807015,
+        "fpr_by_group": {
+          "Asian": 0.008,
+          "Black": 0.01644889566889965,
+          "Black Hispanic": 0.012611665790856543,
+          "Hispanic": 0.014138438880706922,
+          "Native American": 0.043859649122807015,
+          "Other": 0.024299065420560748,
+          "Unknown": 0.014925373134328358,
+          "White": 0.01579961464354528
+        },
+        "fnr_difference": 0.2824175824175824,
+        "fnr_by_group": {
+          "Asian": 0.6461538461538462,
+          "Black": 0.7099056603773585,
+          "Black Hispanic": 0.6551724137931034,
+          "Hispanic": 0.7119675456389453,
+          "Native American": 0.7142857142857143,
+          "Other": 0.7,
+          "Unknown": 0.9285714285714286,
+          "White": 0.6802030456852792
+        },
+        "equalized_odds_difference": 0.2824175824175824
+      }
+    },
+    "Gradient Boosting": {
+      "accuracy": 0.9482418280972933,
+      "precision": 0.647887323943662,
+      "recall": 0.3068371317398555,
+      "f1": 0.4164466239155036,
+      "auc": 0.855674120605352,
+      "brier_score": 0.041937229485761444,
+      "fairness": {
+        "selection_rate_difference": 0.017855028534893083,
+        "selection_rates_by_group": {
+          "Asian": 0.03297872340425532,
+          "Black": 0.026938775510204082,
+          "Black Hispanic": 0.0263671875,
+          "Hispanic": 0.029932720032953452,
+          "Native American": 0.01652892561983471,
+          "Other": 0.03185840707964602,
+          "Unknown": 0.018604651162790697,
+          "White": 0.034383954154727794
+        },
+        "fpr_difference": 0.014780400842742153,
+        "fpr_by_group": {
+          "Asian": 0.006857142857142857,
+          "Black": 0.011540757445115075,
+          "Black Hispanic": 0.005780346820809248,
+          "Hispanic": 0.0101620029455081,
+          "Native American": 0.008771929824561403,
+          "Other": 0.020560747663551402,
+          "Unknown": 0.014925373134328358,
+          "White": 0.009633911368015413
+        },
+        "fnr_difference": 0.3131868131868132,
+        "fnr_by_group": {
+          "Asian": 0.6153846153846154,
+          "Black": 0.6992924528301887,
+          "Black Hispanic": 0.7034482758620689,
+          "Hispanic": 0.6977687626774848,
+          "Native American": 0.8571428571428571,
+          "Other": 0.7666666666666667,
+          "Unknown": 0.9285714285714286,
+          "White": 0.6395939086294417
+        },
+        "equalized_odds_difference": 0.3131868131868132
+      }
+    }
+  },
+  "preprocessing": {
+    "target_column": "arstmade",
+    "target_interpretation": "Arrest was made during stop",
+    "n_samples": 99627,
+    "race_distribution": {
+      "Black": 53010,
+      "Hispanic": 24317,
+      "White": 9415,
+      "Black Hispanic": 6743,
+      "Asian": 3153,
+      "Other": 1890,
+      "Unknown": 701,
+      "Native American": 398
+    },
+    "outcome_rate": 0.06020456302006484
+  },
+  "best_model": {
+    "name": "Gradient Boosting",
+    "auc": 0.855674120605352,
+    "f1": 0.4164466239155036
+  }
+}

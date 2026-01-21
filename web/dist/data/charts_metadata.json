@@ -1,0 +1,287 @@
+[
+  {
+    "chart_id": "compas_recidivism_by_race",
+    "filename": "compas_recidivism_by_race.png",
+    "title": "Two-Year Recidivism Rate by Race",
+    "dataset": "COMPAS",
+    "explanation": "This chart shows the actual two-year recidivism rates across different racial groups in the COMPAS dataset. African American defendants show a higher observed recidivism rate compared to other groups. However, this disparity reflects complex socioeconomic factors, systemic inequalities in the criminal justice system, and potential selection bias in who gets arrested and prosecuted. The base rate differences are a key consideration when evaluating algorithmic fairness, as they affect the interpretation of prediction errors.",
+    "speaker_notes": [
+      "African American defendants have highest observed recidivism rate in this dataset",
+      "Base rate differences complicate fairness analysis - equal error rates may not be achievable",
+      "These rates reflect arrests/convictions, not actual criminal behavior",
+      "Socioeconomic factors and systemic bias contribute to these disparities"
+    ],
+    "slide_title": "Recidivism Rates Vary by Race",
+    "talk_track": "Looking at the raw recidivism rates, we see significant variation across racial groups. African American defendants in this dataset have a recidivism rate of about 52%, compared to roughly 39% for White defendants. These differences reflect not just individual behavior but systemic factors including policing patterns, socioeconomic conditions, and selection effects in who enters the criminal justice system in the first place."
+  },
+  {
+    "chart_id": "compas_priors_distribution",
+    "filename": "compas_priors_distribution.png",
+    "title": "Prior Convictions Distribution by Race",
+    "dataset": "COMPAS",
+    "explanation": "The distribution of prior convictions varies across racial groups, with African American defendants showing a wider spread. Prior convictions are a strong predictor of recidivism but also reflect historical disparities in policing and prosecution. Using this feature in prediction models can perpetuate historical biases, as minority communities have been disproportionately policed. This creates a feedback loop where past discrimination influences future predictions.",
+    "speaker_notes": [
+      "Prior convictions strongly predict recidivism but carry historical bias",
+      "Differential policing means minorities have more opportunity for prior arrests",
+      "Using priors in models can perpetuate historical discrimination",
+      "This illustrates the 'feedback loop' problem in predictive systems"
+    ],
+    "slide_title": "Prior Convictions: A Biased Feature?",
+    "talk_track": "Prior convictions are one of the strongest predictors of future recidivism, but they're also deeply problematic from a fairness perspective. Due to historical over-policing of minority communities, African American individuals are more likely to have prior records for the same behavior. When we train algorithms on this data, we risk encoding these historical disparities into our predictions."
+  },
+  {
+    "chart_id": "compas_model_comparison",
+    "filename": "compas_model_comparison.png",
+    "title": "Model Performance Comparison",
+    "dataset": "COMPAS",
+    "explanation": "This chart compares three machine learning models trained to predict two-year recidivism. AUC (Area Under ROC Curve) measures overall discrimination ability, while F1 Score balances precision and recall. Gradient Boosting typically achieves the highest AUC, demonstrating better ability to rank defendants by risk. However, higher accuracy doesn't guarantee fairer outcomes - a model can be accurate overall while producing disparate error rates across groups.",
+    "speaker_notes": [
+      "All models achieve moderate predictive performance (AUC ~0.65-0.72)",
+      "Higher complexity doesn't always mean better performance here",
+      "Accuracy alone is insufficient - must consider fairness metrics",
+      "The 'best' model depends on how we weight accuracy vs. fairness"
+    ],
+    "slide_title": "Comparing Predictive Models",
+    "talk_track": "We trained three models of increasing complexity. Interestingly, the performance gains from more sophisticated models are modest. All achieve AUC scores around 0.65-0.72, which is typical for recidivism prediction. The key insight is that raw accuracy isn't everything - we need to examine how these errors are distributed across demographic groups."
+  },
+  {
+    "chart_id": "compas_roc_curves",
+    "filename": "compas_roc_curves.png",
+    "title": "ROC Curves - Model Comparison",
+    "dataset": "COMPAS",
+    "explanation": "ROC curves visualize the trade-off between true positive rate (correctly identifying recidivists) and false positive rate (incorrectly flagging non-recidivists) at various thresholds. The curves for all three models are similar, suggesting the choice of algorithm matters less than the fundamental predictability of the outcome. The diagonal line represents random guessing - our models perform meaningfully better but are far from perfect prediction.",
+    "speaker_notes": [
+      "ROC curves show trade-off between sensitivity and specificity",
+      "All models significantly outperform random chance",
+      "Similar curves suggest algorithm choice has limited impact",
+      "Perfect prediction (AUC=1.0) is likely impossible for this task"
+    ],
+    "slide_title": "ROC Analysis Shows Moderate Predictability",
+    "talk_track": "The ROC curves tell an important story - all three models perform similarly, with AUCs clustering around 0.70. This suggests that the choice of algorithm matters less than the inherent difficulty of predicting human behavior. No model achieves excellent discrimination, which raises questions about deploying such systems for high-stakes decisions."
+  },
+  {
+    "chart_id": "compas_confusion_matrix",
+    "filename": "compas_confusion_matrix.png",
+    "title": "Confusion Matrix - Logistic Regression",
+    "dataset": "COMPAS",
+    "explanation": "The confusion matrix shows how predictions map to actual outcomes. False positives (top-right) represent people incorrectly predicted to recidivate - they may face harsher treatment despite not actually reoffending. False negatives (bottom-left) represent missed predictions of recidivism. In criminal justice, false positives can mean unnecessary incarceration, while false negatives might mean inadequate supervision. The ethical weight of these errors differs.",
+    "speaker_notes": [
+      "False positives: predicted recidivism but didn't reoffend (potential unjust detention)",
+      "False negatives: predicted no recidivism but did reoffend (potential public safety issue)",
+      "Neither error type is 'neutral' - both have real human consequences",
+      "The distribution of these errors across groups is the fairness question"
+    ],
+    "slide_title": "Understanding Prediction Errors",
+    "talk_track": "This confusion matrix reveals the real-world implications of our model's errors. When we predict someone will recidivate but they don't - a false positive - that person might receive a longer sentence or be denied parole unjustly. Conversely, false negatives might mean someone who needed intervention didn't receive it. Neither error is neutral."
+  },
+  {
+    "chart_id": "compas_fairness_by_race",
+    "filename": "compas_fairness_by_race.png",
+    "title": "Fairness Metrics by Race",
+    "dataset": "COMPAS",
+    "explanation": "These three panels reveal how prediction errors distribute across racial groups. Selection rate (left) shows who gets predicted as high-risk - African Americans are flagged at higher rates. False Positive Rate (center) shows errors on non-recidivists - African Americans are more likely to be wrongly predicted to recidivate. False Negative Rate (right) shows errors on actual recidivists - White defendants are more likely to be wrongly predicted as low-risk. This pattern mirrors the ProPublica investigation's findings about COMPAS.",
+    "speaker_notes": [
+      "Higher FPR for Black defendants = more likely wrongly labeled high-risk",
+      "Higher FNR for White defendants = more likely wrongly labeled low-risk",
+      "This is the core 'algorithmic bias' finding from ProPublica's investigation",
+      "These disparities persist across different model architectures"
+    ],
+    "slide_title": "Disparate Error Rates: The Fairness Problem",
+    "talk_track": "This is the crux of the fairness debate. African American defendants face a higher false positive rate - meaning they're more likely to be incorrectly labeled as high-risk when they won't actually recidivate. Conversely, White defendants have a higher false negative rate - more likely to be labeled low-risk when they will recidivate. These aren't random errors; they're systematically skewed."
+  },
+  {
+    "chart_id": "compas_calibration_curves",
+    "filename": "compas_calibration_curves.png",
+    "title": "Calibration Curves by Race",
+    "dataset": "COMPAS",
+    "explanation": "Calibration curves show whether predicted probabilities match observed frequencies. A well-calibrated model should have points along the diagonal - if the model says 70% risk, about 70% of those individuals should actually recidivate. Different calibration by group indicates the model's confidence means different things for different populations. This connects to the debate about whether 'fairness' means equal calibration or equal error rates across groups.",
+    "speaker_notes": [
+      "Calibration = do predicted probabilities match reality?",
+      "Differences suggest the 'same score' means different things for different groups",
+      "This is central to COMPAS debate: Northpointe argued calibration was fair",
+      "ProPublica argued error rate differences mattered more"
+    ],
+    "slide_title": "What Does a Risk Score Really Mean?",
+    "talk_track": "Calibration curves address a crucial question: when the model says someone has a 70% risk of recidivism, do 70% of such people actually recidivate? The COMPAS company argued their scores were calibrated equally across races. But ProPublica showed that error rates differed. This highlights a fundamental tension - we can't simultaneously have equal calibration AND equal error rates when base rates differ between groups."
+  },
+  {
+    "chart_id": "compas_mitigation_comparison",
+    "filename": "compas_mitigation_comparison.png",
+    "title": "Bias Mitigation: Before vs After",
+    "dataset": "COMPAS",
+    "explanation": "Bias mitigation techniques can reduce fairness gaps but typically at some cost to overall accuracy. The left panel shows the trade-off: moving from red (before) to green (after) reduces the equalized odds difference but may decrease accuracy. The right panel shows how false positive rates become more similar across groups after mitigation. This illustrates a fundamental tension in algorithmic fairness - we often can't maximize accuracy and fairness simultaneously.",
+    "speaker_notes": [
+      "Mitigation reduces disparity but may reduce accuracy",
+      "This is the 'fairness-accuracy trade-off' discussed in literature",
+      "The 'optimal' point depends on societal values, not just math",
+      "Different mitigation methods have different trade-off profiles"
+    ],
+    "slide_title": "The Fairness-Accuracy Trade-off",
+    "talk_track": "When we apply bias mitigation - in this case, threshold optimization to equalize error rates - we see a meaningful reduction in the equalized odds difference. However, this comes at a cost to overall accuracy. This trade-off isn't a technical failure; it's a reflection of the fundamental impossibility of satisfying all fairness criteria simultaneously when base rates differ."
+  },
+  {
+    "chart_id": "compas_feature_importance",
+    "filename": "compas_feature_importance.png",
+    "title": "Feature Importance",
+    "dataset": "COMPAS",
+    "explanation": "Feature importance reveals what the model 'looks at' when making predictions. Prior convictions and age are typically most predictive. Notably, race-related features often have low direct importance, but this doesn't mean the model is unbiased - race correlates with other features like number of priors due to systemic factors. The model can learn racial disparities indirectly through proxy variables, a phenomenon called 'redundant encoding' of protected attributes.",
+    "speaker_notes": [
+      "Number of priors is typically the strongest predictor",
+      "Age also matters - younger defendants have higher predicted risk",
+      "Low importance of race features doesn't mean model is fair",
+      "Proxy variables can encode race indirectly"
+    ],
+    "slide_title": "What Drives Predictions?",
+    "talk_track": "Looking at feature importance, we see that criminal history - particularly number of prior convictions - dominates the prediction. Race variables have lower direct importance, but this doesn't mean the model is race-neutral. Other features like priors and age correlate with race due to historical policing patterns, so the model can learn racial patterns indirectly."
+  },
+  {
+    "chart_id": "nypd_stops_by_race",
+    "filename": "nypd_stops_by_race.png",
+    "title": "Stop-and-Frisk Encounters by Race",
+    "dataset": "NYPD SQF",
+    "explanation": "This chart shows the racial composition of police stops in NYC during 2012. Black and Hispanic individuals constitute the vast majority of stops - far exceeding their proportion of the city's population. In 2012, NYC was approximately 33% White, 29% Hispanic, and 26% Black, yet White individuals represent a small fraction of stops. This disparity was central to the Floyd v. City of New York ruling that found the program unconstitutional.",
+    "speaker_notes": [
+      "Black and Hispanic individuals make up ~85% of stops",
+      "NYC demographic composition doesn't match stop patterns",
+      "This disparity led to federal court ruling against NYPD in 2013",
+      "Raises questions about reasonable suspicion standards"
+    ],
+    "slide_title": "Who Gets Stopped? Racial Disparities in SQF",
+    "talk_track": "The Stop-Question-Frisk data reveals stark racial disparities. In 2012, Black and Hispanic New Yorkers made up approximately 85% of all stops, despite being about 55% of the city's population. These numbers became central evidence in the federal lawsuit that ultimately found the program unconstitutional."
+  },
+  {
+    "chart_id": "nypd_outcome_by_race",
+    "filename": "nypd_outcome_by_race.png",
+    "title": "Arrest Rate by Race",
+    "dataset": "NYPD SQF",
+    "explanation": "This chart shows the arrest rate - the proportion of stops that resulted in a arrest - broken down by race. Interestingly, outcome rates are often similar or even lower for Black and Hispanic individuals compared to White individuals. This is significant: if police had equally good 'reasonable suspicion' across groups, we'd expect similar outcome rates. Lower 'hit rates' for minorities suggest the threshold for stopping them may be lower - a form of differential treatment.",
+    "speaker_notes": [
+      "Arrest rates are relatively similar across groups",
+      "Lower or equal rates for minorities despite more stops is telling",
+      "Suggests different 'reasonable suspicion' thresholds by race",
+      "This is the 'hit rate' disparity discussed in policing literature"
+    ],
+    "slide_title": "Arrest Rates: A Deeper Story",
+    "talk_track": "Looking at arrest rates - the proportion of stops that resulted in a arrest - we see something important. Despite being stopped far more often, Black and Hispanic individuals don't have higher rates. This suggests police may use a lower threshold of suspicion when stopping minorities - they're stopped more often but aren't more likely to have done something wrong."
+  },
+  {
+    "chart_id": "nypd_precinct_analysis",
+    "filename": "nypd_precinct_analysis.png",
+    "title": "Precinct Analysis: Outcomes and Demographics",
+    "dataset": "NYPD SQF",
+    "explanation": "This chart reveals geographic patterns in stop-and-frisk. Each bar pair shows a precinct's arrest rate alongside the proportion of Black individuals stopped there. Precincts vary significantly in both metrics. Some high-activity precincts have very high proportions of Black stops. This geographic clustering means that neighborhood-level factors like poverty, crime rates, and police deployment patterns contribute to racial disparities in stops - but also raises questions about whether deployment itself reflects bias.",
+    "speaker_notes": [
+      "Geographic patterns show concentrated policing in certain precincts",
+      "Racial composition of stops varies significantly by location",
+      "Some precincts show >90% Black/Hispanic stops",
+      "Deployment decisions determine who gets policed"
+    ],
+    "slide_title": "Geography of Policing",
+    "talk_track": "The geographic dimension is crucial. Stop patterns aren't uniform across the city - they're heavily concentrated in certain precincts. These precincts tend to have higher proportions of Black and Hispanic residents and receive more police resources. This creates a feedback loop: more police presence leads to more stops, which generates more data, which may justify continued heavy policing."
+  },
+  {
+    "chart_id": "nypd_confounding_heatmap",
+    "filename": "nypd_confounding_heatmap.png",
+    "title": "Arrest Rate by Precinct and Race",
+    "dataset": "NYPD SQF",
+    "explanation": "This heatmap reveals the complex interaction between race, location, and stop outcomes. Each cell shows the arrest rate for a specific race in a specific precinct. Within precincts, we can see whether outcome rates differ by race holding location constant. This helps disentangle whether racial disparities are driven by 'who gets stopped' vs 'where police are deployed'. The pattern suggests both factors play a role.",
+    "speaker_notes": [
+      "Heatmap controls for location to isolate racial effects",
+      "Within-precinct disparities suggest race matters beyond geography",
+      "Some precincts show racial disparities, others don't",
+      "Complex interaction between place and race"
+    ],
+    "slide_title": "Disentangling Race and Place",
+    "talk_track": "This heatmap helps us understand whether racial disparities persist when we control for location. If disparities were purely geographic - driven by where police are deployed - we'd expect similar rates within each precinct. Instead, we see variation by race even within the same precinct, suggesting that race itself influences stop and arrest decisions beyond just neighborhood effects."
+  },
+  {
+    "chart_id": "nypd_age_distribution",
+    "filename": "nypd_age_distribution.png",
+    "title": "Age Distribution by Race",
+    "dataset": "NYPD SQF",
+    "explanation": "The age distribution of stopped individuals shows that police stops heavily target young people across all races. The peak is in the late teens and early twenties. This pattern is consistent with crime statistics showing younger individuals are more likely to be involved in crime - but it also means young minority males bear the heaviest burden of stop-and-frisk policies, with potential long-term effects on their relationship with law enforcement and society.",
+    "speaker_notes": [
+      "Stops heavily concentrated among young people (15-25)",
+      "Similar age patterns across racial groups",
+      "Young Black and Hispanic males most frequently stopped",
+      "Repeated stops can affect trust in law enforcement"
+    ],
+    "slide_title": "The Young Bear the Burden",
+    "talk_track": "Looking at age, we see stops concentrate heavily among young people - the peak is around 18-22 years old. This pattern holds across races, but combined with the racial disparities we've seen, it means young Black and Hispanic men face the most intense police contact. Research shows repeated stops can erode trust in institutions and have lasting psychological effects."
+  },
+  {
+    "chart_id": "nypd_model_comparison",
+    "filename": "nypd_model_comparison.png",
+    "title": "Model Performance - Arrest Prediction",
+    "dataset": "NYPD SQF",
+    "explanation": "These models attempt to predict whether a stop will result in an arrest, using the circumstances recorded at the time of the stop. Predictive performance indicates how well stop characteristics correlate with outcomes. Interestingly, if police were perfectly effective at identifying suspicious activity, we'd expect high predictive accuracy. Moderate accuracy suggests significant noise in who gets stopped - many stops don't result in any enforcement action.",
+    "speaker_notes": [
+      "Models predict arrest from stop circumstances",
+      "Moderate AUC suggests imperfect targeting",
+      "Low F1 often due to class imbalance (most stops don't lead to arrest)",
+      "Predictability indicates signal in stop reasons"
+    ],
+    "slide_title": "Can We Predict Arrests?",
+    "talk_track": "We trained models to predict whether a stop would lead to an arrest based on the recorded circumstances. The moderate performance tells us something important: stop characteristics do predict outcomes to some degree, but there's substantial unpredictability. Many stops based on 'reasonable suspicion' don't result in any action."
+  },
+  {
+    "chart_id": "nypd_fairness_metrics",
+    "filename": "nypd_fairness_metrics.png",
+    "title": "Fairness Metrics by Race",
+    "dataset": "NYPD SQF",
+    "explanation": "These panels show how our arrest prediction model performs across racial groups. The left panel shows predicted positive rates - whether the model predicts high or low risk differently by race. The right panel shows error rates: FPR (falsely predicting arrest) and FNR (missing actual arrests). Disparities here indicate that model errors aren't equally distributed, raising fairness concerns if such models were used to guide policing decisions.",
+    "speaker_notes": [
+      "Model predictions vary by race",
+      "Error rates show how mistakes are distributed",
+      "Disparities in errors = disparate impact",
+      "Using such models could amplify existing biases"
+    ],
+    "slide_title": "Fairness in Predictive Policing",
+    "talk_track": "If we were to use this model to guide policing - which is essentially what predictive policing does - we'd need to examine its fairness properties. The disparities in error rates show that the model doesn't fail equally across groups. Some groups face higher false positive rates, meaning they'd be disproportionately flagged for scrutiny."
+  },
+  {
+    "chart_id": "comparison_base_rates",
+    "filename": "comparison_base_rates.png",
+    "title": "Outcome Rates by Race: COMPAS vs NYPD",
+    "dataset": "Comparison",
+    "explanation": "Comparing outcome rates across datasets reveals different patterns of disparity. In COMPAS, African American defendants have higher observed recidivism rates. In NYPD data, the pattern is different - arrest/search rates are relatively similar or even lower for minorities despite far more stops. This contrast highlights how different stages of the criminal justice system produce different disparity patterns. Both reflect systemic issues but manifest differently.",
+    "speaker_notes": [
+      "COMPAS shows higher recidivism rates for Black defendants",
+      "NYPD shows similar or lower 'hit rates' despite more stops",
+      "Different stages of system, different disparity patterns",
+      "Both datasets show racial disparities, expressed differently"
+    ],
+    "slide_title": "Two Datasets, Different Disparity Patterns",
+    "talk_track": "Comparing these datasets reveals how racial disparities manifest differently at different points in the system. In COMPAS, Black defendants show higher recidivism rates - but this reflects who gets arrested and prosecuted. In NYPD data, minorities are stopped far more but don't have higher outcome rates - suggesting lower thresholds for stopping them."
+  },
+  {
+    "chart_id": "comparison_fairness_metrics",
+    "filename": "comparison_fairness_metrics.png",
+    "title": "Fairness Metric Comparison",
+    "dataset": "Comparison",
+    "explanation": "This chart compares fairness metrics between the two datasets. Both show meaningful disparities across multiple fairness criteria. The dashed line at 0.1 represents a common threshold used in fairness literature - values above suggest actionable disparity. Notably, the pattern of which metrics show most disparity differs between datasets, reflecting the different nature of the decisions being modeled (recidivism prediction vs. stop outcome prediction).",
+    "speaker_notes": [
+      "Both datasets exceed common fairness thresholds",
+      "Different metrics are most problematic in each dataset",
+      "0.1 difference often used as actionable threshold",
+      "Both systems would fail many fairness audits"
+    ],
+    "slide_title": "Fairness Audit Results",
+    "talk_track": "Both datasets show significant disparities across multiple fairness metrics. The dashed line at 0.1 represents a common threshold - above this, many would consider the disparity actionable. Both COMPAS and a model trained on NYPD data exceed this threshold on multiple metrics, suggesting both would fail fairness audits."
+  },
+  {
+    "chart_id": "comparison_feedback_loop",
+    "filename": "comparison_feedback_loop.png",
+    "title": "The Algorithmic Feedback Loop",
+    "dataset": "Comparison",
+    "explanation": "This diagram illustrates how bias perpetuates through the criminal justice AI pipeline. Historical policing patterns (which reflect societal biases) generate arrest data. This data trains predictive policing tools and risk assessment algorithms. These tools influence real decisions - who gets stopped, who gets longer sentences. Those decisions generate new criminal records, which become future training data. The loop reinforces itself: past bias becomes encoded in algorithms that produce future bias.",
+    "speaker_notes": [
+      "Bias isn't just in the algorithm - it's in the entire system",
+      "Training data reflects historical discrimination",
+      "Predictions influence decisions that generate new data",
+      "Without intervention, the loop amplifies disparities"
+    ],
+    "slide_title": "The Vicious Cycle of Algorithmic Bias",
+    "talk_track": "This is perhaps the most important insight from our analysis. Bias in criminal justice AI isn't a one-time problem we can fix with better algorithms. It's a feedback loop. Historical discrimination produced biased data. That data trains algorithms. Those algorithms influence decisions. Those decisions create new data. And the cycle continues, potentially amplifying disparities over time."
+  }
+]

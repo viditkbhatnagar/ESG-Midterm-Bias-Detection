@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-01-21T23:45:21.001836",
+  "team": "Group 2: Vidit, Ronaldo, Kaleemulla, Vishal",
+  "course": "Ethics, Sociology, and Governance of AI (MAIB AI 219)",
+  "datasets": {
+    "COMPAS": {
+      "name": "ProPublica COMPAS Recidivism",
+      "sample_size": 6172,
+      "outcome": "Two-year recidivism",
+      "base_rate": 0.4551198963058976,
+      "best_model": {
+        "name": "Logistic Regression",
+        "auc": 0.7375153864331337,
+        "f1": 0.6237942122186495
+      }
+    },
+    "NYPD": {
+      "name": "NYPD Stop-Question-Frisk 2012",
+      "sample_size": 100000,
+      "outcome": "Arrest was made during stop",
+      "base_rate": 0.06020456302006484,
+      "best_model": {
+        "name": "Gradient Boosting",
+        "auc": 0.855674120605352,
+        "f1": 0.4164466239155036
+      }
+    }
+  },
+  "key_findings": [
+    {
+      "finding": "Both datasets show significant racial disparities in outcomes and model predictions.",
+      "evidence": "COMPAS shows higher recidivism rates for African Americans; NYPD shows minorities are stopped far more frequently.",
+      "implication": "Algorithmic systems trained on this data will inherit these disparities."
+    },
+    {
+      "finding": "Different fairness metrics reveal different aspects of bias.",
+      "evidence": "COMPAS shows high FPR disparity (error on non-recidivists); NYPD shows high selection rate disparity.",
+      "implication": "No single fairness metric captures all forms of bias; comprehensive auditing is needed."
+    },
+    {
+      "finding": "Bias mitigation can reduce disparities but involves accuracy trade-offs.",
+      "evidence": "Post-mitigation COMPAS model reduced equalized odds difference while sacrificing some accuracy.",
+      "implication": "Fairness interventions require value judgments about acceptable trade-offs."
+    },
+    {
+      "finding": "Geographic and demographic factors are deeply confounded.",
+      "evidence": "NYPD precinct analysis shows race and location are intertwined in stop patterns.",
+      "implication": "Controlling for geography doesn't eliminate racial disparities; both contribute."
+    },
+    {
+      "finding": "Predictive models have moderate accuracy, questioning their use for high-stakes decisions.",
+      "evidence": "Best models achieve AUC of 0.74 (COMPAS) and 0.86 (NYPD).",
+      "implication": "Models are better than random but far from reliable; error rates have human consequences."
+    },
+    {
+      "finding": "The criminal justice AI pipeline creates feedback loops that can amplify bias.",
+      "evidence": "Policing data feeds risk scores, which influence sentencing, which creates criminal records for future training.",
+      "implication": "Technical fixes alone are insufficient; systemic intervention is required."
+    }
+  ],
+  "total_charts": 19
+}

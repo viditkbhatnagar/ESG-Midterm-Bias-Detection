@@ -1,0 +1,13 @@
+# Large data files
+2012.csv
+*.csv
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+
+# Node
+node_modules/
+
